@@ -1,0 +1,162 @@
+{
+  "premium_finance": {
+    "name": "Premium Financial News",
+    "sources": [
+      {
+        "name": "Bloomberg Markets",
+        "url": "https://www.bloomberg.com/markets",
+        "category": "market_data",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "Financial Times",
+        "url": "https://www.ft.com/markets",
+        "category": "analysis",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "Wall Street Journal Finance",
+        "url": "https://www.wsj.com/finance",
+        "category": "news",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "The Economist - Finance",
+        "url": "https://www.economist.com/finance-and-economics",
+        "category": "analysis",
+        "priority": "high",
+        "active": true
+      }
+    ]
+  },
+  "mainstream_finance": {
+    "name": "Mainstream Financial Media",
+    "sources": [
+      {
+        "name": "Reuters Business",
+        "url": "https://www.reuters.com/business/finance",
+        "category": "news",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "CNBC Finance",
+        "url": "https://www.cnbc.com/finance",
+        "category": "news",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "CNBC World Markets",
+        "url": "https://www.cnbc.com/world-markets",
+        "category": "market_data",
+        "priority": "medium",
+        "active": true
+      },
+      {
+        "name": "MarketWatch",
+        "url": "https://www.marketwatch.com",
+        "category": "market_data",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "Yahoo Finance",
+        "url": "https://finance.yahoo.com",
+        "category": "market_data",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "CNN Business Markets",
+        "url": "https://www.cnn.com/business/markets",
+        "category": "news",
+        "priority": "medium",
+        "active": true
+      }
+    ]
+  },
+  "investment_platforms": {
+    "name": "Investment & Analysis Platforms",
+    "sources": [
+      {
+        "name": "Investing.com",
+        "url": "https://www.investing.com",
+        "category": "market_data",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "Seeking Alpha",
+        "url": "https://seekingalpha.com",
+        "category": "analysis",
+        "priority": "high",
+        "active": true
+      },
+      {
+        "name": "The Motley Fool",
+        "url": "https://www.fool.com",
+        "category": "analysis",
+        "priority": "medium",
+        "active": true
+      },
+      {
+        "name": "Benzinga",
+        "url": "https://www.benzinga.com",
+        "category": "news",
+        "priority": "medium",
+        "active": true
+      },
+      {
+        "name": "NASDAQ News",
+        "url": "https://www.nasdaq.com/news",
+        "category": "market_data",
+        "priority": "high",
+        "active": true
+      }
+    ]
+  },
+  "general_business": {
+    "name": "General Business News",
+    "sources": [
+      {
+        "name": "Business Insider Finance",
+        "url": "https://www.businessinsider.com/finance",
+        "category": "news",
+        "priority": "medium",
+        "active": true
+      },
+      {
+        "name": "Forbes Money",
+        "url": "https://www.forbes.com/money",
+        "category": "analysis",
+        "priority": "medium",
+        "active": true
+      },
+      {
+        "name": "BBC Business",
+        "url": "https://www.bbc.com/news/business",
+        "category": "news",
+        "priority": "medium",
+        "active": true
+      },
+      {
+        "name": "The Guardian Business",
+        "url": "https://www.theguardian.com/business",
+        "category": "news",
+        "priority": "medium",
+        "active": true
+      },
+      {
+        "name": "New York Times Business",
+        "url": "https://www.nytimes.com/section/business",
+        "category": "news",
+        "priority": "medium",
+        "active": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+nohup: ignoring input
+node:internal/modules/cjs/loader:1031
+  throw err;
+  ^
+
+Error: Cannot find module './server.ts'
+Require stack:
+- /home/rowan/Skrivebord/UCL/hackathon/src/imaginaryUncacheableRequireResolveScript
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1028:15)
+    at Function.resolve (node:internal/modules/cjs/helpers:125:19)
+    at requireResolveNonCached (/home/rowan/.npm/_npx/1bf7c3c15bf47d04/node_modules/ts-node/dist/bin.js:549:16)
+    at getProjectSearchDir (/home/rowan/.npm/_npx/1bf7c3c15bf47d04/node_modules/ts-node/dist/bin.js:519:40)
+    at phase3 (/home/rowan/.npm/_npx/1bf7c3c15bf47d04/node_modules/ts-node/dist/bin.js:267:27)
+    at bootstrap (/home/rowan/.npm/_npx/1bf7c3c15bf47d04/node_modules/ts-node/dist/bin.js:47:30)
+    at main (/home/rowan/.npm/_npx/1bf7c3c15bf47d04/node_modules/ts-node/dist/bin.js:33:12)
+    at Object.<anonymous> (/home/rowan/.npm/_npx/1bf7c3c15bf47d04/node_modules/ts-node/dist/bin.js:579:5)
+    at Module._compile (node:internal/modules/cjs/loader:1198:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1252:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/rowan/Skrivebord/UCL/hackathon/src/imaginaryUncacheableRequireResolveScript'
+  ]
+}
