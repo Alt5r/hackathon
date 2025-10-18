@@ -2,155 +2,190 @@
 
 ## ✅ Both Servers are Now Accessible on LAN!
 
-### 📡 Access URLs
+### 📡 Access URLs for Friends on Same Network
 
-#### From Your PC (localhost):
-- **Frontend**: http://localhost:5173
-- **Backend**: http://localhost:3001
-
-#### From Other Devices on Same Network:
-- **Frontend**: http://192.168.0.85:5173
-- **Backend**: http://192.168.0.85:3001
-
----
-
-## 👥 For Your Friend to Access:
-
-Your friend should open their web browser and navigate to:
-
+**Frontend (Main App):**
 ```
 http://192.168.0.85:5173
 ```
 
-This will load the TruthCapital frontend, which will automatically connect to the backend at:
-
+**Backend API (Direct Access):**
 ```
 http://192.168.0.85:3001
 ```
 
 ---
 
+## 🎯 For Your Friend to Use the App:
+
+Your friend should:
+1. Open their web browser
+2. Navigate to: **`http://192.168.0.85:5173`**
+3. The frontend will automatically connect to the backend at `http://192.168.0.85:3001`
+4. Click the **"News Monitor"** button to test the backend connection
+
+---
+
+## 📱 Quick Connection Test
+
+### For Your Friend to Test Backend Connection:
+
+Open this URL in their browser:
+```
+http://192.168.0.85:3001/health
+```
+
+Should display:
+```json
+{"status":"OK","message":"TruthCapital Backend is running"}
+```
+
+---
+
 ## 🔧 What Was Changed:
 
-### 1. Vite Configuration (`vite.config.ts`)
-Updated the server configuration to bind to all network interfaces:
+### 1. Frontend Environment Variables (`.env`)
+Changed from:
+```
+VITE_API_URL=http://localhost:3001
+```
 
+To:
+```
+VITE_API_URL=http://192.168.0.85:3001
+```
+
+This tells the frontend to connect to your computer's LAN IP instead of localhost.
+
+### 2. Vite Configuration (`vite.config.ts`)
+Set server to bind to all network interfaces:
 ```typescript
 server: {
-  host: '0.0.0.0',  // Bind to all network interfaces (not just localhost)
+  host: '0.0.0.0',  // Accessible from any device on network
   port: 5173,
-  strictPort: true,
-  open: false,
 }
 ```
 
-### 2. Backend CORS Configuration (`hackathon-backend/src/app.ts`)
+### 3. Backend CORS Configuration
 Already configured to accept requests from all localhost origins, including LAN IPs.
 
 ---
 
-## 🔥 Firewall Check (If Connection Still Fails)
+## � Current Server Status
 
-If your friend still can't access the frontend, you may need to allow the port through your firewall:
+✅ **Backend**: Running on `192.168.0.85:3001`
+✅ **Frontend**: Running on `192.168.0.85:5173`
+✅ **Network**: Both accessible on LAN
+✅ **API Connection**: Frontend configured to use LAN IP for backend
 
-### On Linux (Ubuntu/Debian):
+---
+
+## � Testing from Different Devices
+
+### From Your Computer (Host):
+- Frontend: http://localhost:5173 OR http://192.168.0.85:5173
+- Backend: http://localhost:3001 OR http://192.168.0.85:3001
+
+### From Friend's Device (Same Network):
+- Frontend: http://192.168.0.85:5173
+- Backend: http://192.168.0.85:3001
+
+---
+
+## � Troubleshooting
+
+### Issue: Friend can see frontend but gets "Backend Offline" error
+
+**Solution:** Already fixed! The `.env` file now uses your LAN IP (`192.168.0.85:3001`) instead of `localhost:3001`.
+
+### Issue: Friend cannot access either service
+
+**Possible Causes:**
+1. **Firewall blocking**: You may need to allow ports 3001 and 5173
+   ```bash
+   sudo ufw allow 3001/tcp
+   sudo ufw allow 5173/tcp
+   ```
+
+2. **IP address changed**: Your computer's IP might have changed
+   ```bash
+   hostname -I  # Check current IP
+   ```
+   If different from 192.168.0.85, update the `.env` file and restart frontend.
+
+3. **Same network**: Ensure both devices are on the same WiFi/network
+
+### Issue: Backend works but shows no data
+
+Check the News Monitor component in the frontend - it should show:
+- ✅ Backend Online status
+- List of 20 finance news sources
+- "Fetch All News" button working
+
+---
+
+## 🔄 Restart Commands (If Needed)
+
+### Stop Everything:
 ```bash
-sudo ufw allow 5173/tcp
-sudo ufw allow 3001/tcp
-sudo ufw reload
+lsof -ti:3001 | xargs kill -9  # Stop backend
+lsof -ti:5173 | xargs kill -9  # Stop frontend
 ```
 
-### Check if firewall is active:
+### Start Backend:
 ```bash
-sudo ufw status
-```
-
----
-
-## 📱 Test Connection
-
-### From Your Friend's Device:
-
-1. **Test Backend Connection:**
-   ```bash
-   curl http://192.168.0.85:3001/health
-   ```
-   Should return: `{"status":"OK","message":"TruthCapital Backend is running"}`
-
-2. **Test Frontend:**
-   Open browser and go to: `http://192.168.0.85:5173`
-
----
-
-## 🚨 Troubleshooting
-
-### If Friend Can Access Backend (3001) But Not Frontend (5173):
-
-1. **Check if frontend is running:**
-   ```bash
-   lsof -ti:5173
-   ```
-
-2. **Check frontend logs:**
-   ```bash
-   tail -f /home/rowan/Skrivebord/UCL/hackathon/frontend.log
-   ```
-
-3. **Restart frontend:**
-   ```bash
-   cd /home/rowan/Skrivebord/UCL/hackathon
-   lsof -ti:5173 | xargs kill -9
-   npm run dev
-   ```
-
-### If Neither Service is Accessible:
-
-1. **Check your local IP hasn't changed:**
-   ```bash
-   hostname -I
-   ```
-
-2. **Verify both services are running:**
-   ```bash
-   lsof -ti:3001  # Backend
-   lsof -ti:5173  # Frontend
-   ```
-
-3. **Check firewall rules:**
-   ```bash
-   sudo ufw status verbose
-   ```
-
----
-
-## 🎯 Quick Restart Commands
-
-### Restart Both Servers:
-```bash
-# Stop servers
-lsof -ti:3001 | xargs kill -9
-lsof -ti:5173 | xargs kill -9
-
-# Start backend
 cd /home/rowan/Skrivebord/UCL/hackathon/hackathon-backend
-nohup npx ts-node src/server.ts > backend.log 2>&1 &
+npx ts-node src/server.ts &
+```
 
-# Start frontend
+### Start Frontend:
+```bash
 cd /home/rowan/Skrivebord/UCL/hackathon
-nohup npm run dev > frontend.log 2>&1 &
+npm run dev &
 ```
 
 ---
 
-## 📊 Current Status:
+## 📊 API Endpoints Available
 
-✅ **Backend**: Running on port 3001 (accessible on LAN)
-✅ **Frontend**: Running on port 5173 (accessible on LAN)
-✅ **Local IP**: 192.168.0.85
-✅ **CORS**: Configured to accept all localhost origins
-✅ **Network Binding**: Vite configured with `host: '0.0.0.0'`
+All endpoints accessible at `http://192.168.0.85:3001/api/news/`:
+
+- **GET `/health`** - Server health check
+- **GET `/api/news`** - Fetch news from all sources
+- **GET `/api/news/links`** - Get list of all news sources
+- **GET `/api/news/source/:index`** - Fetch news from specific source (0-19)
+- **GET `/api/news/category/:category`** - Get sources by category
+- **GET `/api/news/priority/high`** - Get high-priority sources only
+
+---
+
+## 📝 Important Notes
+
+1. **IP Address**: `192.168.0.85` is your current LAN IP. If your router assigns a new IP, you'll need to:
+   - Update the `.env` file
+   - Restart the frontend
+   - Give your friend the new URL
+
+2. **Port Forwarding**: Not needed for LAN access, only if you want internet access
+
+3. **HTTPS**: Currently using HTTP. For production, you'd want HTTPS
+
+4. **Performance**: Both devices should be on the same network for best performance
+
+---
+
+## 🎉 Success Checklist
+
+- [x] Backend running and accessible via LAN IP
+- [x] Frontend running and accessible via LAN IP  
+- [x] Frontend configured to use LAN IP for backend API
+- [x] CORS configured to accept LAN connections
+- [x] Environment variables updated
+- [x] News sources configured (20 finance sources)
 
 ---
 
 **Share this URL with your friend:**
 ## 🔗 http://192.168.0.85:5173
+
+They should be able to access the full TruthCapital app now!

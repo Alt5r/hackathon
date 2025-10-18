@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { color: #0f5; border-left: 4px solid #0f5; }
+        .error { color: #d4183d; border-left: 4px solid #d4183d; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔗 Backend Connection Test</h1>
+    
+    <div class="test-box">
+        <h3>Current Configuration:</h3>
+        <p><strong>Backend URL being used:</strong> <span id="backendUrl">Checking...</span></p>
+        <p><strong>Your IP:</strong> 192.168.0.85</p>
+        <p><strong>Expected Backend:</strong> http://192.168.0.85:3001</p>
+    </div>
+
+    <div class="test-box">
+        <h3>Connection Tests:</h3>
+        <button onclick="testLocalhost()">Test localhost:3001</button>
+        <button onclick="testLanIP()">Test 192.168.0.85:3001</button>
+        <button onclick="testHealth()">Test Health Endpoint</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const lanBackendURL = 'http://192.168.0.85:3001';
+        const localhostURL = 'http://localhost:3001';
+        
+        // Show what URL the app would use
+        document.getElementById('backendUrl').textContent = lanBackendURL;
+
+        async function testLocalhost() {
+            await testConnection(localhostURL, 'localhost:3001');
+        }
+
+        async function testLanIP() {
+            await testConnection(lanBackendURL, '192.168.0.85:3001');
+        }
+
+        async function testHealth() {
+            await testConnection(lanBackendURL + '/health', 'Health Endpoint (LAN IP)');
+        }
+
+        async function testConnection(url, label) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML += `<p>Testing ${label}...</p>`;
+            
+            try {
+                const response = await fetch(url + '/health');
+                const data = await response.json();
+                
+                resultsDiv.innerHTML += `
+                    <div class="test-box success">
+                        <strong>✅ ${label} - SUCCESS</strong>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML += `
+                    <div class="test-box error">
+                        <strong>❌ ${label} - FAILED</strong>
+                        <pre>${error.message}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-test on load
+        window.onload = () => {
+            setTimeout(() => testHealth(), 1000);
+        };
+    </script>
+</body>
+</html>

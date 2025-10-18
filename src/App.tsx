@@ -8,6 +8,7 @@ import { StoryDetailPage } from './components/StoryDetailPage';
 import { WavyBackground } from './components/WavyBackground';
 import { Footer } from './components/Footer';
 import { NewsMonitor } from './components/NewsMonitor';
+import { ApiDebugInfo } from './components/ApiDebugInfo';
 import { mockStories } from './data/mockStories';
 import { Story } from './types/story';
 
@@ -246,6 +247,7 @@ export default function App() {
       </div>
 
       <Footer darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+      <ApiDebugInfo />
     </div>
   );
 }

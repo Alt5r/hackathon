@@ -2,10 +2,13 @@
  * API Service for connecting to the TruthCapital Backend
  */
 
-// @ts-ignore
-const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || 'http://localhost:3001';
+// @ts-ignore - Vite env types
+const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:3001';
 
-console.log('🔗 NewsAPI configured to connect to:', API_BASE_URL);
+console.log('='.repeat(60));
+console.log('🔗 NewsAPI Backend URL:', API_BASE_URL);
+console.log('📍 This should be: http://192.168.0.85:3001 (for LAN access)');
+console.log('='.repeat(60));
 
 export interface NewsLink {
   id: number;
