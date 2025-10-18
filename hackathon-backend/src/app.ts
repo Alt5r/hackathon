@@ -4,7 +4,7 @@ import newsRoutes from './routes/news';
 
 const app = express();
 
-// Middleware - Allow all localhost origins
+// Middleware - Allow all localhost and LAN origins
 app.use(cors({
   origin: function(origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -12,6 +12,11 @@ app.use(cors({
     
     // Allow all localhost origins
     if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      return callback(null, true);
+    }
+    
+    // Allow LAN IP addresses (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
+    if (origin.match(/https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2[0-9]|3[0-1])\.\d+\.\d+)(:\d+)?/)) {
       return callback(null, true);
     }
     
