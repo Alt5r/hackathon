@@ -11,6 +11,7 @@ import { NewsMonitor } from './components/NewsMonitor';
 import { ApiDebugInfo } from './components/ApiDebugInfo';
 import { mockStories } from './data/mockStories';
 import { Story } from './types/story';
+import Sidebar from './components/Sidebar';
 
 export default function App() {
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
@@ -40,31 +41,36 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white dark:bg-[rgb(114,120,141)]">
         <WavyBackground darkMode={darkMode} />
-        <header className="border-b-2 border-[rgba(151,223,252,0.3)] dark:border-[rgba(151,223,252,0.2)] bg-white/90 dark:bg-[rgb(114,120,141)]/95 backdrop-blur-sm sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="bg-gradient-to-br from-[rgb(151,223,252)] to-[rgb(173,252,146)] p-2 rounded-lg shadow-lg">
-                  <Shield className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-[rgb(114,120,141)] dark:text-white">TruthCapital</h1>
-                  <p className="text-xs text-[rgb(114,120,141)] dark:text-white/70 opacity-70">News Monitor - Backend Integration</p>
+        <div className="flex">
+          <Sidebar onNavigate={(route) => { if (route === 'home') setShowNewsMonitor(false); }} />
+          <div className="flex-1">
+            <header className="border-b-2 border-[rgba(151,223,252,0.3)] dark:border-[rgba(151,223,252,0.2)] bg-white/90 dark:bg-[rgb(114,120,141)]/95 backdrop-blur-sm sticky top-0 z-50">
+              <div className="max-w-7xl mx-auto px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-gradient-to-br from-[rgb(151,223,252)] to-[rgb(173,252,146)] p-2 rounded-lg shadow-lg">
+                      <Shield className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h1 className="text-[rgb(114,120,141)] dark:text-white">TruthCapital</h1>
+                      <p className="text-xs text-[rgb(114,120,141)] dark:text-white/70 opacity-70">News Monitor - Backend Integration</p>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    onClick={() => setShowNewsMonitor(false)}
+                    variant="outline" 
+                    className="border-[rgba(151,223,252,0.3)] hover:bg-[rgba(151,223,252,0.1)] text-[rgb(114,120,141)] dark:text-white"
+                  >
+                    Back to Dashboard
+                  </Button>
                 </div>
               </div>
-              
-              <Button 
-                onClick={() => setShowNewsMonitor(false)}
-                variant="outline" 
-                className="border-[rgba(151,223,252,0.3)] hover:bg-[rgba(151,223,252,0.1)] text-[rgb(114,120,141)] dark:text-white"
-              >
-                Back to Dashboard
-              </Button>
-            </div>
+            </header>
+            <NewsMonitor />
+            <Footer darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
           </div>
-        </header>
-        <NewsMonitor />
-        <Footer darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+        </div>
       </div>
     );
   }
